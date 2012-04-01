@@ -1,14 +1,21 @@
 require 'spec_helper'
 
-describe "User pages" do
+describe User do
 
-  subject { page }
+  before do
+    @user = User.new(name: "Example User", email: "user@example.com")
+  end
 
-  describe "signup page" do
-    before { visit signup_path }
+  subject { @user }
 
-    it { should have_selector('h1',    text: 'Sign up') }
-    it { should have_selector('title', text: full_title('Sign up')) }
+  it { should respond_to(:name) }
+  it { should respond_to(:email) }
+
+  it { should be_valid }
+
+  describe "when name is not present" do
+    before { @user.name = " " }
+    it { should_not be_valid }
   end
 end
 
